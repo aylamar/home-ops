@@ -60,28 +60,16 @@ spec:
                 memory: 256Mi
               limits:
                 memory: 1024Mi
-          filebrowser:
-            env:
-              TZ: "${TIMEZONE}"
-            image:
-              repository: filebrowser/filebrowser
-              tag: v2.31.2-s6
     service:
       app:
         controller: *app
         ports:
           http:
             port: &port 30000
-      filebrowser:
-        controller: *app
-        primary: false
-        ports:
-          filebrowser:
-            port: 80
     ingress:
       app:
         enabled: true
-        className: internal
+        className: external
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Games
@@ -95,16 +83,9 @@ spec:
                 service:
                   identifier: app
                   port: http
-          - host: &host-filebrowser foundry-files.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: filebrowser
         tls:
           - hosts:
               - *host
-              - *host-filebrowser
     persistence:
       data:
         enabled: true
@@ -113,7 +94,3 @@ spec:
           foundryvtt:
             app:
               - path: /data
-            filebrowser:
-              - path: /db
-                subPath: filebrowser
-              - path: /srv/data

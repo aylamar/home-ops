@@ -1,0 +1,74 @@
+libraries:                                      # This is called out once within the config.yml file
+  # disabling while waiting for audio flags to update
+  # Anime Movies:                                 # These are names of libraries in your Plex
+  #   remove_overlays: false                      # Set this to true to remove all overlays
+  #   overlay_files:
+  #   - git: meisnate12/home1800/overlays/audio_flags.yml     # https://github.com/meisnate12/Plex-Meta-Manager-Configs/tree/master/home1800
+  #   - pmm: ribbon                               # This is a file within PMM's defaults folder
+  #     template_variables:
+  #       use_oscars: false
+  #       use_metacritic: false
+  #       use_rotten: false
+  #       use_common: false
+  #       use_imdb: true
+  Movies:                                       # These are names of libraries in your Plex
+    remove_overlays: false                      # Set this to true to remove all overlays
+    overlay_files:
+    - pmm: ribbon                               # This is a file within PMM's defaults folder
+      template_variables:
+        use_oscars: false
+        use_metacritic: false
+        use_rotten: false
+        use_common: false
+        use_imdb: true
+settings:
+  cache: true
+  cache_expiration: 60
+  asset_directory: config/assets
+  asset_folders: true
+  asset_depth: 0
+  create_asset_folders: false
+  prioritize_assets: false
+  dimensional_asset_rename: false
+  download_url_assets: false
+  show_missing_season_assets: false
+  show_missing_episode_assets: false
+  show_asset_not_needed: true
+  sync_mode: append
+  minimum_items: 1
+  default_collection_order:
+  delete_below_minimum: true
+  delete_not_scheduled: false
+  run_again_delay: 2
+  missing_only_released: false
+  only_filter_missing: false
+  show_unmanaged: true
+  show_unconfigured: true
+  show_filtered: false
+  show_options: false
+  show_missing: true
+  show_missing_assets: true
+  save_report: false
+  tvdb_language: eng
+  ignore_ids:
+  ignore_imdb_ids:
+  item_refresh_delay: 0
+  playlist_sync_to_user: all
+  playlist_exclude_users:
+  playlist_report: false
+  verify_ssl: true
+  custom_repo:
+  check_nightly: false
+plex: # Can be individually specified per library as well; REQUIRED for the script to run
+  url: http://plex:32400
+  token: !env_var PLEX_TOKEN
+  timeout: 60
+  clean_bundles: false
+  empty_trash: false
+  optimize: false
+  db_cache:
+tmdb: # REQUIRED for the script to run
+  apikey: !env_var TMDB_API_KEY
+  language: en
+  cache_expiration: 60
+  region:

@@ -1,0 +1,138 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.4/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app plex
+spec:
+  releaseName: *app
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  rollback:
+    cleanupOnFail: true
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      plex:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.40.2.8395-c67dce28e@sha256:3861cc940ecdf97b773fa24d826407cea86559d0f26366d7acd10cef1704f46c
+            env:
+              # See https://support.plex.tv/articles/ 201105343-advanced-hidden-server-settings/
+              TZ: America/Chicago
+              # See https://support.plex.tv/articles/ 201105343-advanced-hidden-server-settings/
+              ADVERTISE_IP: http://192.168.10.112:32400
+              PLEX_UID: 568
+              PLEX_GID: 568
+            resources:
+              requests:
+                cpu: 100m
+              #   memory: 2Gi # TODO uncomment this
+              # limits:
+              #   memory: 8Gi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+                  httpGet:
+                    path: /identity
+                    port: 32400
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    service:
+      app:
+        controller: plex
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 192.168.10.112
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            port: 32400
+    hostNetwork: true
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Plex
+          gethomepage.dev/icon: plex.svg
+          gethomepage.dev/description: Media server
+          gethomepage.dev/widget.type: plex
+          gethomepage.dev/widget.url: "http://plex.media.svc.cluster.local:32400"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLEX_TOKEN}}` }}"
+          gethomepage.dev/widget.fields: '["streams", "movies", "tv"]'
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
+        hosts:
+          - host: &host plex.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        existingClaim: *app
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server
+      # Separate PVC for cache to avoid backing up cache files
+      cache:
+        existingClaim: plex-cache
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Cache
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Logs
+      tmp:
+        type: emptyDir
+      transcode:
+        type: emptyDir
+        globalMounts:
+          - path: /transcode
+      media:
+        type: nfs
+        server: "192.168.10.42"
+        path: /mnt/user/media
+        globalMounts:
+          - path: /media

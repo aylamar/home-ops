@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.4/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app immich-machine-learning
+spec:
+  releaseName: *app
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  dependsOn:
+    - name: immich-server
+      namespace: media
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  rollback:
+    cleanupOnFail: true
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      enableServiceLinks: false
+      # securityContext:
+      #   runAsUser: 568
+      #   runAsGroup: 568
+      #   fsGroup: 568
+      #   fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      immich-machine-learning:
+        replicas: 2
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v1.123.0@sha256:fca90362ff3081fc7762d731eb24de262181eaec28afc51eff1d3ca5348663cd
+            env:
+              IMMICH_MEDIA_LOCATION: /media/library/photos
+              TZ: America/Chicago
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+              - configMapRef:
+                  name: immich-configmap
+            resources:
+              requests:
+                cpu: 10m
+                memory: 576Mi
+              limits:
+                memory: 4096Mi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 3003
+    persistence:
+      # photos: # TODO set this up
+      #   existingClaim: media-nfs-share-pvc
+      #   globalMounts:
+      #     - path: /media
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /cache
+      geocoding-dump:
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/.reverse-geocoding-dump
+      transformers-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/.transformers_cache

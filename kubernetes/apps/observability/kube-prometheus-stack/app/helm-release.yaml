@@ -31,7 +31,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: kube-prometheus-stack-crds
+    - name: prometheus-operator-crds
       namespace: observability
     - name: rook-ceph-cluster
       namespace: rook-ceph

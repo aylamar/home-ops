@@ -48,7 +48,7 @@ spec:
               # See https://support.plex.tv/articles/ 201105343-advanced-hidden-server-settings/
               TZ: America/Chicago
               # See https://support.plex.tv/articles/ 201105343-advanced-hidden-server-settings/
-              ADVERTISE_IP: http://192.168.10.112:32400
+              ADVERTISE_IP: https://plex.${SECRET_DOMAIN},http://192.168.10.112:32400
               PLEX_UID: 568
               PLEX_GID: 568
             resources:

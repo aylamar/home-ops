@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
   dependsOn:
     - name: kube-prometheus-stack
-      namespace: monitoring
+      namespace: observability
   maxHistory: 3
   install:
     createNamespace: true

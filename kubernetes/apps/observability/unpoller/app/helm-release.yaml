@@ -39,8 +39,6 @@ spec:
               UP_UNIFI_DEFAULT_ROLE: home-ops
               UP_UNIFI_DEFAULT_URL: https://192.168.0.1
               UP_UNIFI_DEFAULT_VERIFY_SSL: false
-              UP_UNIFI_DEFAULT_USER: "{{ .UNIFI_USERNAME }}"
-              UP_UNIFI_DEFAULT_PASS: "{{ .UNIFI_PASSWORD }}"
               UP_INFLUXDB_DISABLE: true
             envFrom:
               - secretRef:

@@ -1,3 +1,21 @@
+# :file_cabinet: Hardware
+
+| Device                                  | OS Disk Size | Data Disk Size            | RAM  | Purpose                                          |
+|-----------------------------------------|--------------|---------------------------|------|--------------------------------------------------|
+| UniFi UDM Pro                           | -            | -                         | -    | Firewall, router, and NVR                        |
+| Switch Pro Max 16 PoE                   | -            | -                         | -    | Main switch                                      |
+| Switch Flex Mini 2.5G                   | -            | -                         | -    | Switch for NUCs                                  |
+| 3x Intel NUC 13 NUC13ANHi5              | 512GB SSD    | 1TB NVMe                  | 32GB | Talos node, NVMe is dedicated to Rook Ceph       |
+| HL15                                    | 1TB NVMe     | 10x 20TB (Mirrored vdevs) | 64GB | TRUENAS powered bulk storage                     |
+| Unraid                                  | 32GB USB     | 8x 8TB HDDs (1 Parity)    | 16GB | Old bulk storage                                 |
+| UniFi USP PDU Pro                       | -            | -                         | -    | PDU                                              |
+| CyberPower CP1500AVRLCD3                | -            | -                         | -    | UPS                                              |
+
+
+---
+
+
+
 # ⛵ Cluster Template
 
 Welcome to my opinionated and extensible template for deploying a single Kubernetes cluster. The goal of this project is to make it easier for people interested in using Kubernetes to deploy a cluster at home on bare-metal or VMs. This template closely mirrors my personal [home-ops](https://github.com/onedr0p/home-ops) repository.

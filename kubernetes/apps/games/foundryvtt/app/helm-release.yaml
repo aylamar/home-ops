@@ -76,6 +76,7 @@ spec:
           gethomepage.dev/name: Foundry
           gethomepage.dev/icon: foundry-vtt.png
           gethomepage.dev/description: Virtual table top
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hosts:
           - host: &host foundry.${SECRET_DOMAIN}
             paths:

@@ -33,7 +33,7 @@ loadBalancer:
   mode: "dsr"
 localRedirectPolicy: true
 operator:
-  replicas: 1
+  replicas: 2
   rollOutPods: true
 rollOutCiliumPods: true
 routingMode: native

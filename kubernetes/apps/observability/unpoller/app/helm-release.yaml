@@ -28,7 +28,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      unifi-poller:
+      unpoller:
         containers:
           app:
             image:

@@ -54,9 +54,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-              #   memory: 2Gi # TODO uncomment this
-              # limits:
-              #   memory: 8Gi
+                memory: 4Gi
+              limits:
+                memory: 8Gi
             probes:
               liveness:
                 enabled: true
@@ -79,7 +79,6 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 192.168.10.112
-        externalTrafficPolicy: Local
         ports:
           http:
             port: 32400

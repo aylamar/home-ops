@@ -57,9 +57,9 @@ spec:
               FOUNDRY_TELEMETRY: 'false'
             resources:
               requests:
-                memory: 256Mi
+                memory: 512Mi
               limits:
-                memory: 1024Mi
+                memory: 2Gi
     service:
       app:
         controller: *app
@@ -69,7 +69,7 @@ spec:
     ingress:
       app:
         enabled: true
-        className: external
+        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Games

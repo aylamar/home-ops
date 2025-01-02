@@ -99,8 +99,3 @@ spec:
         path: /mnt/data/media
         globalMounts:
           - path: /media
-      # nfs-media:
-      #   enabled: true
-      #   existingClaim: media-nfs-share-pvc
-      #   globalMounts:
-      #     - path: /media

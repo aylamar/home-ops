@@ -95,8 +95,8 @@ spec:
         type: emptyDir
       downloads:
         type: nfs
-        server: "192.168.10.42"
-        path: /mnt/user/media
+        server: "192.168.10.41"
+        path: /mnt/data/media
         globalMounts:
           - path: /media
       # nfs-media:

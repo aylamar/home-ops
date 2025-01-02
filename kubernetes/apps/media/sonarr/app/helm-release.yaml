@@ -104,7 +104,5 @@ spec:
         type: nfs
         server: "192.168.10.41"
         path: /mnt/data/media
-        # server: "192.168.10.42"
-        # path: /mnt/user/media
         globalMounts:
           - path: /media

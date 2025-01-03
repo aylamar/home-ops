@@ -13,6 +13,9 @@ spec:
         kind: HelmRepository
         name: cloudnative-pg
         namespace: flux-system
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   maxHistory: 3
   install:
     remediation:

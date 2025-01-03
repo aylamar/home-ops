@@ -18,6 +18,10 @@ spec:
   dependsOn:
     - name: immich-server
       namespace: media
+    - name: cloudnative-pg
+      namespace: database
+    - name: redis
+      namespace: database
   maxHistory: 2
   install:
     remediation:
@@ -33,11 +37,11 @@ spec:
   values:
     defaultPodOptions:
       enableServiceLinks: false
-      # securityContext:
-      #   runAsUser: 568
-      #   runAsGroup: 568
-      #   fsGroup: 568
-      #   fsGroupChangePolicy: OnRootMismatch
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       immich-machine-learning:
         replicas: 2
@@ -58,9 +62,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 576Mi
+                memory: 512Mi
               limits:
-                memory: 4096Mi
+                memory: 4Gi
     service:
       app:
         controller: *app
@@ -68,10 +72,6 @@ spec:
           http:
             port: &port 3003
     persistence:
-      # photos: # TODO set this up
-      #   existingClaim: media-nfs-share-pvc
-      #   globalMounts:
-      #     - path: /media
       cache:
         type: emptyDir
         globalMounts:
@@ -84,3 +84,9 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /usr/src/app/.transformers_cache
+      media:
+        type: nfs
+        server: "192.168.10.41"
+        path: /mnt/data/media
+        globalMounts:
+          - path: /media

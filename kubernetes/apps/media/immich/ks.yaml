@@ -25,5 +25,3 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-
-# https://github.com/rwlove/home-ops/blob/main/kubernetes/main/apps/media/immich/ks.yaml

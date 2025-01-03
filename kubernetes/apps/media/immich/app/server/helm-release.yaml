@@ -16,9 +16,9 @@ spec:
         name: bjw-s
         namespace: flux-system
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
     - name: cloudnative-pg
+      namespace: database
+    - name: redis
       namespace: database
   maxHistory: 2
   install:
@@ -36,9 +36,9 @@ spec:
     defaultPodOptions:
       enableServiceLinks: false
       securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       immich-server:
@@ -62,7 +62,7 @@ spec:
                 cpu: 10m
                 memory: 512Mi
               limits:
-                memory: 1024Mi
+                memory: 1Gi
         initContainers:
           01-init-db:
             image:
@@ -113,7 +113,9 @@ spec:
         name: immich-configmap
         globalMounts:
           - path: /config
-      # photos: # TODO set this up
-      #   existingClaim: media-nfs-share-pvc
-      #   globalMounts:
-      #     - path: /media
+      media:
+        type: nfs
+        server: "192.168.10.41"
+        path: /mnt/data/media
+        globalMounts:
+          - path: /media

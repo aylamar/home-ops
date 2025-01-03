@@ -6,7 +6,7 @@ metadata:
 spec:
   targetNamespace: &namespace observability
   dependsOn:
-    - name: cloudnative-pg-cluster
+    - name: pg-cluster
   path: ./kubernetes/apps/observability/gatus/app
   prune: true
   sourceRef:

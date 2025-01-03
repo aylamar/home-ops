@@ -193,9 +193,10 @@ spec:
           datasource: Prometheus
         smart:
           # renovate: depName="Dashboard for smartctl_exporter"
-          gnetId: 22381
+          gnetId: 20204
           revision: 1
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         unifi-insights:
           # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
           gnetId: 11315

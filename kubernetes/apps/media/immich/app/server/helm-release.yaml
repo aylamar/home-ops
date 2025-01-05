@@ -16,7 +16,7 @@ spec:
         name: bjw-s
         namespace: flux-system
   dependsOn:
-    - name: cloudnative-pg
+    - name: pg-cluster
       namespace: database
     - name: redis
       namespace: database

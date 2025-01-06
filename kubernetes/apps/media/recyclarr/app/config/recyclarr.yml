@@ -24,6 +24,9 @@ sonarr:
     # Set to 'true' to automatically remove custom formats from Radarr when they are removed from the guide or your configuration. This will NEVER delete custom formats you manually created!
     delete_old_custom_formats: true
 
+    # Instruct recyclarr to replace custom formats (old behavior)
+    replace_existing_custom_formats: true
+
     # Quality definitions from the guide to sync to Sonarr. Choices: series, anime
     quality_definition:
       type: anime
@@ -59,6 +62,9 @@ radarr:
 
     # Set to 'true' to automatically remove custom formats from Radarr when they are removed from the guide or your configuration. This will NEVER delete custom formats you manually created!
     delete_old_custom_formats: true
+
+    # Instruct recyclarr to replace custom formats (old behavior)
+    replace_existing_custom_formats: true
 
     include:
       # Comment out any of the following includes to disable them

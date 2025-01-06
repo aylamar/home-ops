@@ -33,12 +33,12 @@ spec:
   values:
     controllers:
       qbittorrent:
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+        # pod:
+        #   securityContext:
+        #     runAsUser: 568
+        #     runAsGroup: 568
+        #     fsGroup: 568
+        #     fsGroupChangePolicy: OnRootMismatch
         containers:
           app:
             nameOverride: *app
@@ -147,11 +147,17 @@ spec:
       config:
         enabled: true
         existingClaim: *app
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /config
       tmp:
         type: emptyDir
       downloads:
         type: nfs
         server: "192.168.10.42"
         path: /mnt/data/media
-        globalMounts:
-          - path: /media
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /media

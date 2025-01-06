@@ -111,7 +111,7 @@ spec:
               fsGroupChangePolicy: OnRootMismatch
               runAsNonRoot: true
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
+              readOnlyRootFilesystem: true
               capabilities:
                 drop:
                   - ALL

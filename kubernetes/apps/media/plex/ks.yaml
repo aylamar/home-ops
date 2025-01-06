@@ -29,4 +29,4 @@ spec:
         APP: *app
         GATUS_PATH: /web/index.html
         VOLSYNC_CAPACITY: 32Gi
-        VOLSYNC_CACHE_CAPACITY: 12Gi
+        VOLSYNC_CACHE_CAPACITY: 16Gi

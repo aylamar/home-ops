@@ -5,9 +5,9 @@ kind: Kustomization
 resources:
   - ./helm-release.yaml
 configMapGenerator:
-  - name: recyclarr-configmap
+  - name: generic-device-plugin-configmap
     files:
-      - recyclarr.yml=./config/recyclarr.yml
+      - ./config/config.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

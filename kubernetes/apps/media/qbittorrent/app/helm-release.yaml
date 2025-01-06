@@ -18,6 +18,8 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: generic-device-plugin
+      namespace: kube-system
   maxHistory: 2
   install:
     remediation:
@@ -77,6 +79,9 @@ spec:
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
+            resources:
+              limits:
+                squat.ai/tun: "1"
             securityContext:
               capabilities:
                 add:

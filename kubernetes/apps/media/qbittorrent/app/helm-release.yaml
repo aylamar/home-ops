@@ -43,7 +43,7 @@ spec:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.40.0
             env:
-              # DOT: "off"
+              DOT: "off"
               # DNS_ADDRESS: "127.0.0.2"
               VPN_SERVICE_PROVIDER: custom
               VPN_TYPE: wireguard

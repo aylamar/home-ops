@@ -41,6 +41,44 @@ spec:
         #     runAsGroup: 568
         #     fsGroup: 568
         #     fsGroupChangePolicy: OnRootMismatch
+
+        initContainers:
+          dnsdist:
+            image:
+              repository: docker.io/powerdns/dnsdist-19
+              tag: 1.9.8
+            restartPolicy: Always
+
+          gluetun:
+            dependsOn:
+              - dnsdist
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.40.0
+            env:
+              DOT: "off"
+              DNS_ADDRESS: "127.0.0.2"
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: wireguard
+              VPN_INTERFACE: wg0
+              WIREGUARD_ENDPOINT_PORT: 51820
+              VPN_PORT_FORWARDING: on
+              VPN_PORT_FORWARDING_PROVIDER: protonvpn
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.69.0.0/16,10.96.0.0/16 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: qbittorrent-secret
+            resources:
+              limits:
+                squat.ai/tun: "1"
+            restartPolicy: Always
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
+
         containers:
           app:
             nameOverride: *app
@@ -66,41 +104,6 @@ spec:
               capabilities:
                 drop:
                   - ALL
-
-          dnsdist:
-            image:
-              repository: docker.io/powerdns/dnsdist-19
-              tag: 1.9.8
-
-          gluetun:
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: latest@sha256:62e76d60e4220950558215647049c2b9ef0fc64272b80f9012562555b140bf84
-            env:
-              VPN_SERVICE_PROVIDER: custom
-              VPN_TYPE: wireguard
-              VPN_INTERFACE: wg0
-              WIREGUARD_ENDPOINT_PORT: 51820
-              VPN_PORT_FORWARDING: on
-              VPN_PORT_FORWARDING_PROVIDER: protonvpn
-              FIREWALL_INPUT_PORTS: 8080
-              FIREWALL_OUTBOUND_SUBNETS: 10.69.0.0/16,10.96.0.0/16 # Allow access to k8s subnets
-              TZ: "America/Chicago"
-            envFrom:
-              - secretRef:
-                  name: qbittorrent-secret
-            resources:
-              limits:
-                squat.ai/tun: "1"
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-              requests:
-                cpu: 100m
-                memory: 100Mi
-              limits:
-                memory: 500Mi
 
           port-forward:
             image:
@@ -180,3 +183,12 @@ spec:
           qbittorrent:
             app:
               - path: /media
+      dnsdist:
+        type: configMap
+        name: qbittorrent-dnsdist
+        advancedMounts:
+          qbittorrent:
+            dnsdist:
+              - path: /etc/dnsdist/dnsdist.conf
+                subPath: dnsdist.conf
+                readOnly: true

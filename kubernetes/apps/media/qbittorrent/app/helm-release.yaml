@@ -30,21 +30,21 @@ spec:
           terminationGracePeriodSeconds: 120
 
         initContainers:
-          # dnsdist:
-          #   image:
-          #     repository: docker.io/powerdns/dnsdist-19
-          #     tag: 1.9.8
-          #   restartPolicy: Always
+          dnsdist:
+            image:
+              repository: docker.io/powerdns/dnsdist-19
+              tag: 1.9.8
+            restartPolicy: Always
 
           gluetun:
-            # dependsOn:
-            #   - dnsdist
+            dependsOn:
+              - dnsdist
             image:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.40.0
             env:
-              # DOT: "off"
-              # DNS_ADDRESS: "127.0.0.2"
+              DOT: "off"
+              DNS_ADDRESS: "127.0.0.2"
               VPN_SERVICE_PROVIDER: custom
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0

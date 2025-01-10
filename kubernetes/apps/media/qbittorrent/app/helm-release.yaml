@@ -27,7 +27,6 @@ spec:
           securityContext:
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
-          terminationGracePeriodSeconds: 120
 
         initContainers:
           dnsdist:
@@ -169,8 +168,6 @@ spec:
           qbittorrent:
             port-forward:
               - path: /config
-      tmp:
-        type: emptyDir
       downloads:
         type: nfs
         server: "192.168.10.42"

@@ -76,6 +76,7 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       }
+    },
     {
       "description": [
         "Flux Group",

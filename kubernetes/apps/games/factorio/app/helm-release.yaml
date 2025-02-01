@@ -55,7 +55,7 @@ spec:
               TZ: "${TIMEZONE}"
             image:
               repository: filebrowser/filebrowser
-              tag: v2.31.2-s6
+              tag: v2.32.0-s6
     service:
       app:
         type: LoadBalancer

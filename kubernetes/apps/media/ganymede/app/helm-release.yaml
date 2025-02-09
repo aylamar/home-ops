@@ -109,3 +109,7 @@ spec:
         path: /mnt/data/media
         globalMounts:
           - path: /media
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+          fsGroup: 568

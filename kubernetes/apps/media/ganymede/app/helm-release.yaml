@@ -61,7 +61,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 1024Mi
+                memory: 4Gi
+              limits:
+                memory: 8Gi
     service:
       app:
         controller: *app
@@ -106,7 +108,3 @@ spec:
         path: /mnt/data/media
         globalMounts:
           - path: /media
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
-          fsGroup: 568

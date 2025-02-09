@@ -41,7 +41,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/zibbp/ganymede:latest
+              repository: ghcr.io/zibbp/ganymede
               tag: 4.0.3@sha256:3f7a93e4875b665cd6473cea99f35fc790facd1f6cfed7c3e6c34c65a405727f
             env:
               TZ: America/Chicago

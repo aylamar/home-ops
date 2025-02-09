@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: external-dns-unifi
+  name: &app external-dns-unifi
 spec:
   interval: 30m
   chart:
@@ -12,12 +12,12 @@ spec:
       version: 1.15.1
       sourceRef:
         kind: HelmRepository
-        name: kubernetes-sigs-external-dns
+        name: external-dns
         namespace: flux-system
       interval: 30m
 
   values:
-    fullnameOverride: &name external-dns-unifi
+    fullnameOverride: *app
     domainFilters: ["${SECRET_DOMAIN}"]
     extraArgs:
       - --ignore-ingress-tls-spec
@@ -74,7 +74,7 @@ spec:
           - target:
               version: v1
               kind: Deployment
-              name: *name
+              name: *app
             patch: |
               - op: add
                 path: /spec/template/spec/enableServiceLinks

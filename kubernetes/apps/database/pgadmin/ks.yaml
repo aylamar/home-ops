@@ -6,7 +6,7 @@ metadata:
   name: &app pgadmin
   namespace: flux-system
 spec:
-  targetNamespace: &namespace pgadmin
+  targetNamespace: &namespace database
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/apps/database/pgadmin/app

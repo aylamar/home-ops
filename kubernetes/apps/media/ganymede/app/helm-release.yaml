@@ -50,9 +50,9 @@ spec:
               TZ: America/Chicago
               PUID: 568
               PGID: 568
-              MAX_CHAT_DOWNLOAD_EXECUTIONS: 2
+              MAX_CHAT_DOWNLOAD_EXECUTIONS: 1
               MAX_CHAT_RENDER_EXECUTIONS: 1
-              MAX_VIDEO_DOWNLOAD_EXECUTIONS: 2
+              MAX_VIDEO_DOWNLOAD_EXECUTIONS: 1
               MAX_VIDEO_CONVERT_EXECUTIONS: 1
               MAX_VIDEO_SPRITE_THUMBNAIL_EXECUTIONS: 1
               VIDEOS_DIR: /media/library/streams

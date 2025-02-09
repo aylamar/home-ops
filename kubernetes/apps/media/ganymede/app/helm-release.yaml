@@ -38,6 +38,14 @@ spec:
         fsGroup: 568
     controllers:
       ganymede:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: ganymede-secret
         containers:
           app:
             image:
@@ -54,14 +62,13 @@ spec:
               MAX_VIDEO_SPRITE_THUMBNAIL_EXECUTIONS: 1
               VIDEOS_DIR: /media/library/streams
               TEMP_DIR: /media/library/streams/tmp
-            envFrom:
-              - secretRef:
-                  name: ganymede-secret
+            envFrom: *envFrom
             resources:
               requests:
                 cpu: 100m
                 memory: 512Mi
               limits:
+                cpu: 4000m
                 memory: 4Gi
     service:
       app:

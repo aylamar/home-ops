@@ -71,5 +71,12 @@ spec:
           - hosts:
               - *host
     persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        advancedMounts:
+          main:
+            main:
+              - path: /var/lib/pgadmin
       tmp:
         type: emptyDir

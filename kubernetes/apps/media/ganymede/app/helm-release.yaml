@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.4/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ganymede
+spec:
+  releaseName: *app
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  rollback:
+    cleanupOnFail: true
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+    controllers:
+      ganymede:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/zibbp/ganymede:latest
+              tag: 4.0.3@sha256:3f7a93e4875b665cd6473cea99f35fc790facd1f6cfed7c3e6c34c65a405727f
+            env:
+              TZ: America/Chicago
+              PUID: 568
+              PGID: 568
+              MAX_CHAT_DOWNLOAD_EXECUTIONS: 2
+              MAX_CHAT_RENDER_EXECUTIONS: 1
+              MAX_VIDEO_DOWNLOAD_EXECUTIONS: 2
+              MAX_VIDEO_CONVERT_EXECUTIONS: 1
+              MAX_VIDEO_SPRITE_THUMBNAIL_EXECUTIONS: 1
+              VIDEOS_DIR: /media/library/streams
+              TEMP_DIR: /media/library/streams/tmp
+            envFrom:
+              - secretRef:
+                  name: ganymede-secret
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 4Gi
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 4000
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: ganymede
+          gethomepage.dev/icon: ganymede.svg
+          gethomepage.dev/description: Twitch stream archiver
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
+        hosts:
+          - host: &host ganymede.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /data/config
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /data/logs
+      media:
+        type: nfs
+        server: "192.168.10.42"
+        path: /mnt/data/media
+        globalMounts:
+          - path: /media

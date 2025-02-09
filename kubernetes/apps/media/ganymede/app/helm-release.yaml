@@ -56,7 +56,7 @@ spec:
               MAX_VIDEO_CONVERT_EXECUTIONS: 1
               MAX_VIDEO_SPRITE_THUMBNAIL_EXECUTIONS: 1
               VIDEOS_DIR: /media/library/streams
-              TEMP_DIR: /media/library/streams/tmp
+              TEMP_DIR: /data/tmp
             envFrom: *envFrom
             resources:
               requests:
@@ -98,6 +98,11 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /data/config
+      tmp:
+        enabled: true
+        existingClaim: ganymede-tmp
+        globalMounts:
+          - path: /data/tmp
       logs:
         type: emptyDir
         globalMounts:

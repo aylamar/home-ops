@@ -4,4 +4,3 @@ resources:
   - ./helm-release.yaml
   - ./external-secret.yaml
   - ../../../../templates/volsync
-  - ./tmp-pvc.yaml

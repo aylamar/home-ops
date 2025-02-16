@@ -5,3 +5,4 @@ resources:
   - ./bottoise-prd/ks.yaml
   - ./chizuru-prd/ks.yaml
   - ./homepage/ks.yaml
+  - ./noombot-prd/ks.yaml

@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/aylamar/chizuru-bot
-              tag: master
+              tag: latest@sha256:f43993fc953e510b2763da578655f55c98cca0bf4c59ec75371e624587416ebd
             env:
               TZ: America/Chicago
             envFrom:

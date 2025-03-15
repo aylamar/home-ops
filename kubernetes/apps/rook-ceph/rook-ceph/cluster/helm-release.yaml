@@ -104,7 +104,7 @@ spec:
               - name: "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_1TB_S5P2NU0W800972J"
           - name: "rhea-02"
             devices:
-              - name: "/dev/disk/by-id/nvme-SHPP41-1000GM_SSB6N82831050723M"
+              - name: "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S73VNJ0XC04257N"
           - name: "rhea-03"
             devices:
               - name: "/dev/disk/by-id/nvme-SHPP41-1000GM_SSB6N82831050723O"

@@ -6,21 +6,21 @@ metadata:
   labels:
     app.kubernetes.io/name: homepage
 data:
-  bookmarks.yaml: |
-    - Media:
-        - YouTube:
-            - icon: youtube.svg
-              href: 'https://youtube.com/feed/subscriptions'
-        - Spotify:
-            - icon: spotify.svg
-              href: 'http://open.spotify.com'
-    - Git:
-        - kubesearch:
-            - icon: kubernetes-dashboard.svg
-              href: 'https://kubesearch.dev/'
-        - home-ops:
-            - icon: github.svg
-              href: 'https://github.com/aylamar/home-ops'
+  # bookmarks.yaml: |
+  #   - Media:
+  #       - YouTube:
+  #           - icon: youtube.svg
+  #             href: 'https://youtube.com/feed/subscriptions'
+  #       - Spotify:
+  #           - icon: spotify.svg
+  #             href: 'http://open.spotify.com'
+  #   - Git:
+  #       - kubesearch:
+  #           - icon: kubernetes-dashboard.svg
+  #             href: 'https://kubesearch.dev/'
+  #       - home-ops:
+  #           - icon: github.svg
+  #             href: 'https://github.com/aylamar/home-ops'
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
@@ -43,22 +43,14 @@ data:
     #               service_group: Downloads # group name where widget exists
     #               service_name: Readarr # service name for that widget
     - Infrastructure:
-        - Unraid:
+        - TrueNAS:
             href: http://192.168.10.42
+            icon: truenas.svg
+            description: Bulk storage via TrueNAS
+        - Unraid:
+            href: http://192.168.10.43
             icon: unraid.svg
-            description: Unraid NAS
-        - rhea-01:
-            href: http://192.168.10.10:8006/
-            icon: proxmox.svg
-            description: Proxmox node rhea-01
-        - rhea-02:
-            href: http://192.168.10.11:8006/
-            icon: proxmox.svg
-            description: Proxmox node rhea-02
-        - rhea-03:
-            href: http://192.168.10.12:8006/
-            icon: proxmox.svg
-            description: Proxmox node rhea-03
+            description: Bulk storage via Unraid
     - Home:
         - Unifi:
             href: https://unifi.ui.com
@@ -89,9 +81,9 @@ data:
         style: row
         columns: 1
         icon: mdi-minecraft
-      Monitoring:
+      Observability:
         style: row
-        columns: 3
+        columns: 2
         icon: mdi-chart-line
       Home:
         style: row

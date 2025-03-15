@@ -256,7 +256,7 @@ spec:
       ingressClassName: internal
       annotations:
         gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Monitoring
+        gethomepage.dev/group: Observability
         gethomepage.dev/name: Grafana
         gethomepage.dev/icon: grafana.svg
         gethomepage.dev/description: Lab dashboards

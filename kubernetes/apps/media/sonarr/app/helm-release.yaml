@@ -76,6 +76,7 @@ spec:
           gethomepage.dev/name: Sonarr
           gethomepage.dev/icon: sonarr.svg
           gethomepage.dev/description: Series management
+          gethomepage.dev/pod-selector: ""
           gethomepage.dev/widget.type: sonarr
           gethomepage.dev/widget.url: "http://sonarr.media.svc.cluster.local:8989"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"

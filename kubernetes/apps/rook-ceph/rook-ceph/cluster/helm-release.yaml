@@ -105,9 +105,9 @@ spec:
           - name: "rhea-02"
             devices:
               - name: "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S73VNJ0XC04257N"
-          # - name: "rhea-03"
-          #   devices:
-          #     - name: "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S73VNJ0XC04128K"
+          - name: "rhea-03"
+            devices:
+              - name: "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S73VNJ0XC04128K"
       placement:
         mgr: &placement
           nodeAffinity:

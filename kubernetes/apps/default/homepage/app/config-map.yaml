@@ -6,21 +6,21 @@ metadata:
   labels:
     app.kubernetes.io/name: homepage
 data:
-  # bookmarks.yaml: |
-  #   - Media:
-  #       - YouTube:
-  #           - icon: youtube.svg
-  #             href: 'https://youtube.com/feed/subscriptions'
-  #       - Spotify:
-  #           - icon: spotify.svg
-  #             href: 'http://open.spotify.com'
-  #   - Git:
-  #       - kubesearch:
-  #           - icon: kubernetes-dashboard.svg
-  #             href: 'https://kubesearch.dev/'
-  #       - home-ops:
-  #           - icon: github.svg
-  #             href: 'https://github.com/aylamar/home-ops'
+  bookmarks.yaml: |
+    # - Media:
+    #     - YouTube:
+    #         - icon: youtube.svg
+    #           href: 'https://youtube.com/feed/subscriptions'
+    #     - Spotify:
+    #         - icon: spotify.svg
+    #           href: 'http://open.spotify.com'
+    # - Git:
+    #     - kubesearch:
+    #         - icon: kubernetes-dashboard.svg
+    #           href: 'https://kubesearch.dev/'
+    #     - home-ops:
+    #         - icon: github.svg
+    #           href: 'https://github.com/aylamar/home-ops'
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster

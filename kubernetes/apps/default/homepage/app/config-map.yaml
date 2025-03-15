@@ -95,7 +95,7 @@ data:
         icon: mdi-download-circle
       Infrastructure:
         style: row
-        columns: 4
+        columns: 2
         icon: mdi-server
   widgets.yaml: |
     - search:

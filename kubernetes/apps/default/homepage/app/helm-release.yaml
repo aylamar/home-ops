@@ -40,7 +40,7 @@ spec:
               tag: v1.0.2
             env:
               TZ: America/Chicago
-              HOMEPAGE_ALLOWED_HOSTS: ${SECRET_DOMAIN}
+              HOMEPAGE_ALLOWED_HOSTS: homepage.${SECRET_DOMAIN}
             envFrom:
               - secretRef:
                   name: homepage-secret

@@ -32,7 +32,10 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
+    - name: rook-ceph
+      namespace: *namespace
+    - name: volsync
+      namespace: volsync-system
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
   prune: true
   sourceRef:

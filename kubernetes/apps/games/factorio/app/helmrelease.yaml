@@ -1,0 +1,115 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.5.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app factorio
+spec:
+  releaseName: *app
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  rollback:
+    cleanupOnFail: true
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      factorio:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              TZ: "${TIMEZONE}"
+              SAVE_NAME: gigaworld9.zip
+              LOAD_LATEST_SAVE: false
+              BIND: "0.0.0.0"
+              UPDATE_MODS_ON_START: true
+            image:
+              repository: factoriotools/factorio
+              tag: stable
+            resources:
+              requests:
+                memory: 8000m
+          filebrowser:
+            env:
+              TZ: "${TIMEZONE}"
+            image:
+              repository: filebrowser/filebrowser
+              tag: v2.32.0-s6
+    service:
+      app:
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/allow-shared-ip: factorio-sharedip
+        loadBalancerIP: "${FACTORIO_IP}"
+        controller: *app
+        ports:
+          gametcp:
+            port: 27015 #rcon port
+          gameudp:
+            port: 34197
+            protocol: UDP
+      filebrowser:
+        controller: *app
+        primary: false
+        ports:
+          filebrowser:
+            port: 80
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "false"
+        hosts:
+          - host: &host factorio.aylamar.com
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+          - host: &host-filebrowser factorio-files.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: filebrowser
+        tls:
+          - hosts:
+              - *host
+              - *host-filebrowser
+    persistence:
+      data:
+        enabled: true
+        existingClaim: *app
+        advancedMounts:
+          factorio:
+            app:
+              - path: /factorio
+            filebrowser:
+              - path: /db
+                subPath: filebrowser
+                # securityContext:
+                #   runAsUser: 845 # factorio user
+                #   runAsGroup: 845
+              - path: /srv/factorio
+                # securityContext:
+                #   runAsUser: 845 # factorio user
+                #   runAsGroup: 845

@@ -15,7 +15,8 @@ spec:
   prune: true # never should be deleted
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   timeout: 5m
@@ -36,7 +37,8 @@ spec:
   prune: true # never should be deleted
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   timeout: 15m

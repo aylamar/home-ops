@@ -8,6 +8,8 @@ spec:
   targetNamespace: &namespace games
   dependsOn:
     - name: external-secrets-stores
+  components:
+    - ../../../../components/volsync
   path: ./kubernetes/apps/games/foundryvtt/app
   prune: true
   sourceRef:

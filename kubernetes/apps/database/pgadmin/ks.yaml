@@ -9,6 +9,8 @@ spec:
   targetNamespace: &namespace database
   dependsOn:
     - name: external-secrets-stores
+  components:
+    - ../../../../components/volsync
   path: ./kubernetes/apps/database/pgadmin/app
   prune: true
   sourceRef:

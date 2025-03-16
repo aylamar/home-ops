@@ -8,6 +8,8 @@ spec:
   targetNamespace: &namespace media
   dependsOn:
     - name: external-secrets-stores
+  components:
+    - ../../../../components/volsync
   path: ./kubernetes/apps/media/qbittorrent/app
   prune: true
   sourceRef:

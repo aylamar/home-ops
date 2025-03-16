@@ -8,6 +8,8 @@ spec:
   targetNamespace: &namespace media
   dependsOn:
     - name: external-secrets-stores
+  components:
+    - ../../../../components/volsync
   path: ./kubernetes/apps/media/plex/app
   prune: true
   sourceRef:
@@ -27,6 +29,5 @@ spec:
   postBuild:
       substitute:
         APP: *app
-        GATUS_PATH: /web/index.html
         VOLSYNC_CAPACITY: 32Gi
         VOLSYNC_CACHE_CAPACITY: 24Gi

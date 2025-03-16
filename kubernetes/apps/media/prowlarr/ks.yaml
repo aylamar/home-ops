@@ -9,6 +9,8 @@ spec:
   targetNamespace: &namespace media
   dependsOn:
     - name: external-secrets-stores
+  components:
+    - ../../../../components/volsync
   path: ./kubernetes/apps/media/prowlarr/app
   prune: true
   sourceRef:
@@ -16,7 +18,7 @@ spec:
     name: home-kubernetes
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app prowlarr 
+      app.kubernetes.io/name: &app prowlarr
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease

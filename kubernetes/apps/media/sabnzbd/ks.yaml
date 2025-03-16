@@ -9,6 +9,8 @@ spec:
   targetNamespace: &namespace media
   dependsOn:
     - name: external-secrets-stores
+  components:
+    - ../../../../components/volsync
   path: ./kubernetes/apps/media/sabnzbd/app
   prune: true
   sourceRef:

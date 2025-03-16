@@ -1,3 +1,0 @@
----
-providerRegex: ^(rhea-01|rhea-02|rhea-03)$
-bypassDnsResolution: true

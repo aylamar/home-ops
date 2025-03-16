@@ -1,26 +1,30 @@
-# Trash
-.DS_Store
-Thumbs.db
-# k8s
+# Secrets
+*.pub
+*.key
+*.decrypted~*.yaml
+/age.key
+/cloudflare-tunnel.json
+/github-deploy.key
+/github-deploy.key.pub
+/github-push-token.txt
+# Template config files
+/cluster.yaml
+/nodes.yaml
+# Kubernetes
 kubeconfig
 talosconfig
+# Misc.
 .decrypted~*.yaml
-.config.env
+.private/
+.task/
+.venv/
+.DS_Store
+Thumbs.db
+/templates
 *.agekey
 *.pub
 *.key
-# Private
-.private
-.bin
-# Ansible
-.venv*
-# Taskfile
-.task
-# Brew
-Brewfile.lock.json
-# intellij
+.decrypted~*.yaml
+.config.env
 .idea
-# wiki
-wiki
-# Bootstrap
-/config.yaml
+

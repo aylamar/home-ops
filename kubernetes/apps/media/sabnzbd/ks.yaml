@@ -1,9 +1,10 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app foundryvtt
-  namespace: &namespace games
+  name: &app sabnzbd
+  namespace: &namespace media
 spec:
   targetNamespace: *namespace
   dependsOn:
@@ -13,7 +14,7 @@ spec:
       namespace: rook-ceph
   components:
     - ../../../../components/volsync
-  path: ./kubernetes/apps/games/foundryvtt/app
+  path: ./kubernetes/apps/media/sabnzbd/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -31,7 +32,5 @@ spec:
   retryInterval: 1m
   timeout: 3m
   postBuild:
-      substitute:
-        APP: *app
-        VOLSYNC_CAPACITY: 24Gi
-        VOLSYNC_CACHE_CAPACITY: 12Gi
+    substitute:
+      APP: *app

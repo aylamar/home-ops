@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.4/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app recyclarr
+spec:
+  releaseName: *app
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  rollback:
+    cleanupOnFail: true
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    restartPolicy: OnFailure
+    controllers:
+      recyclarr:
+        type: cronjob
+        cronjob:
+          schedule: '@daily'
+          ttlSecondsAfterFinished: 86400
+        containers:
+          app:
+            image:
+              repository: ghcr.io/recyclarr/recyclarr
+              tag: 7.4.1@sha256:759540877f95453eca8a26c1a93593e783a7a824c324fbd57523deffb67f48e1
+            envFrom:
+              - secretRef:
+                  name: radarr-secret
+              - secretRef:
+                  name: sonarr-secret
+            resources:
+              requests:
+                cpu: 10m
+                memory: 250Mi
+              limits:
+                memory: 500Mi
+            command:
+              - /app/recyclarr/recyclarr
+            args:
+              - sync
+    service:
+      app:
+        enabled: false
+        controller: *app
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: recyclarr-configmap
+        globalMounts:
+          - path: /config/recyclarr.yml
+            subPath: recyclarr.yml

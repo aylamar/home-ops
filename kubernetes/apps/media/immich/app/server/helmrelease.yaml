@@ -1,0 +1,121 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.4/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app immich-server
+spec:
+  releaseName: *app
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  dependsOn:
+    - name: cloudnative-pg
+      namespace: database
+    - name: redis
+      namespace: database
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  rollback:
+    cleanupOnFail: true
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      enableServiceLinks: false
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      immich-server:
+        replicas: 1
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v1.129.0@sha256:7122354defac839a7ecf541395907c21805f6a2b60b67ee476e66b162f1a355d
+            env:
+              IMMICH_MEDIA_LOCATION: /media/library/photos
+              TZ: America/Chicago
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+              - configMapRef:
+                  name: immich-configmap
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.8
+            envFrom:
+              - secretRef:
+                  name: immich-secret
+              - configMapRef:
+                  name: immich-configmap
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 2283
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Immich
+          gethomepage.dev/icon: immich.svg
+          gethomepage.dev/description: Photo management
+          gethomepage.dev/widget.type: immich
+          gethomepage.dev/widget.url: "http://immich-server.media.svc.cluster.local:3001"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_TOKEN}}` }}"
+          gethomepage.dev/widget.fields: '["photos", "videos", "storage"]'
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
+        hosts:
+          - host: &host immich.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: immich-configmap
+        globalMounts:
+          - path: /config
+      media:
+        type: nfs
+        server: "192.168.10.42"
+        path: /mnt/data/media
+        globalMounts:
+          - path: /media

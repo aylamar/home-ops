@@ -1,19 +1,20 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app foundryvtt
-  namespace: &namespace games
+  name: &app immich
+  namespace: &namespace media
 spec:
   targetNamespace: *namespace
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: pg-cluster
+      namespace: database
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  components:
-    - ../../../../components/volsync
-  path: ./kubernetes/apps/games/foundryvtt/app
+  path: ./kubernetes/apps/media/immich/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,13 +26,8 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: *app
+      name: immich-server
       namespace: *namespace
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  postBuild:
-      substitute:
-        APP: *app
-        VOLSYNC_CAPACITY: 24Gi
-        VOLSYNC_CACHE_CAPACITY: 12Gi

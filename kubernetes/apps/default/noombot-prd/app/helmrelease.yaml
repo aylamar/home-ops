@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.4/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app noombot-prd
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  releaseName: *app
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  rollback:
+    cleanupOnFail: true
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      s-prd:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/aylamar/chizuru-bot
+              tag: latest@sha256:1322083e1f4b552c70ba07da693ca1df3b7c7030835ea1fbb4f5a468676d8bb1
+            env:
+              TZ: America/Chicago
+            envFrom:
+              - secretRef:
+                  name: noombot-prd-secret
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64Mi
+              limits:
+                memory: 256Mi

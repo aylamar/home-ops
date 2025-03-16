@@ -32,3 +32,5 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_PUID: "5050"
+      VOLSYNC_PGID: "5050"

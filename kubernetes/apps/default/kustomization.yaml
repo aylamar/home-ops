@@ -6,4 +6,8 @@ namespace: default
 components:
   - ../../components/common
 resources:
-  - ./echo-server/ks.yaml
+  -  ./bottoise-prd/ks.yaml
+  # - ./echo-server/ks.yaml
+  -  ./chizuru-prd/ks.yaml
+  -  ./homepage/ks.yaml
+  -  ./noombot-prd/ks.yaml

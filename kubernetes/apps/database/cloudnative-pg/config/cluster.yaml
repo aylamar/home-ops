@@ -12,7 +12,7 @@ spec:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
   storage:
-    size: 16Gi
+    size: 32Gi
     storageClass: ceph-block
   postgresql:
     shared_preload_libraries:

@@ -7,6 +7,7 @@ components:
   - ../../components/common
 resources:
   - ./ganymede/ks.yaml
+  - ./hoarder/ks.yaml
   - ./immich/ks.yaml
   - ./lidarr/ks.yaml
   - ./plex/ks.yaml

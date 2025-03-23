@@ -62,8 +62,9 @@ spec:
               STORAGE_FOLDER: "config" # Will always end up as /data/STOREAGE_FOLDER so eg /data/config
               NEXT_PUBLIC_AUTHENTIK_ENABLED: "true"
               HOME: /data/config
-              PDF_MAX_BUFFER: 20
-              SCREENSHOT_MAX_BUFFER: 20
+              PDF_MAX_BUFFER: 100
+              MONOLITH_MAX_BUFFER: 100
+              SCREENSHOT_MAX_BUFFER: 100
             resources:
               requests:
                 cpu: 10m

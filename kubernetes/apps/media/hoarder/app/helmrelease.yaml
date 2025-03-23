@@ -50,13 +50,13 @@ spec:
               - secretRef:
                   name: hoarder-secret
             env:
-              BROWSER_WEB_URL: http://hoarder-chrome.selfhosted.svc.cluster.local:9222
+              BROWSER_WEB_URL: http://hoarder-chrome.media.svc.cluster.local:9222
               CRAWLER_DOWNLOAD_BANNER_IMAGE: true
               CRAWLER_ENABLE_ADBLOCKER: true
               CRAWLER_STORE_SCREENSHOT: true
               DATA_DIR: /data
               DISABLE_SIGNUPS: false
-              MEILI_ADDR: http://hoarder-meilisearch.selfhosted.svc.cluster.local:7700
+              MEILI_ADDR: http://hoarder-meilisearch.media.svc.cluster.local:7700
               NEXTAUTH_URL: https://hoarder.${SECRET_DOMAIN}
               DISABLE_NEW_RELEASE_CHECK: true
               COREPACK_INTEGRITY_KEYS: 0

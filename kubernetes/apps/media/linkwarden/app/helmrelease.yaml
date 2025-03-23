@@ -50,7 +50,7 @@ spec:
               - secretRef:
                   name: linkwarden-secret
             env:
-              NEXTAUTH_URL: https://linkwarden.${SECRET_DOMAIN}
+              NEXTAUTH_URL: https://linkwarden.${SECRET_DOMAIN}/api/v1/auth
               STORAGE_FOLDER: "config" # Will always end up as /data/STOREAGE_FOLDER so eg /data/config
               NEXT_PUBLIC_AUTHENTIK_ENABLED: "true"
               HOME: /data/config
@@ -97,6 +97,8 @@ spec:
       data:
         enabled: true
         existingClaim: *app
+        globalMounts:
+          - path: /data/config
       next-cache:
         enabled: true
         type: emptyDir

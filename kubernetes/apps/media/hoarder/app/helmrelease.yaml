@@ -193,3 +193,7 @@ spec:
             app:
               - path: /meili_data
                 subPath: meilisearch
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /.cache/

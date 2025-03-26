@@ -10,4 +10,5 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./promtail/ks.yaml
+  - ./smartctl-exporter/ks.yaml
   - ./unpoller/ks.yaml

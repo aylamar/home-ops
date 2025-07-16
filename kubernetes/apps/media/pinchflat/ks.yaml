@@ -8,6 +8,8 @@ metadata:
 spec:
   targetNamespace: *namespace
   dependsOn:
+    - name: external-secrets-stores
+      namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph
   components:

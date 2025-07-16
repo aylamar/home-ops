@@ -87,13 +87,10 @@ spec:
       config:
         enabled: true
         existingClaim: *app
-        globalMounts:
-          - path: /config
       yt-dlp:
         type: emptyDir
         globalMounts:
           - path: /etc/yt-dlp
-
       media:
         type: nfs
         server: "192.168.10.42"

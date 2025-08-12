@@ -21,6 +21,7 @@ spec:
   rollback:
     cleanupOnFail: true
   upgrade:
+    force: true # temporary
     cleanupOnFail: true
     remediation:
       retries: 3

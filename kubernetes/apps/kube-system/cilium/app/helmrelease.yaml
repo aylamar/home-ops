@@ -25,5 +25,21 @@ spec:
     - kind: ConfigMap
       name: cilium-values
   values:
-    operator:
-      tolerations: []
+    hubble:
+      enabled: true
+      metrics:
+        enabled:
+          - dns:query
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
+        serviceMonitor:
+          enabled: true
+        dashboards:
+          enabled: true
+      ui:
+        enabled: true
+        rollOutPods: true

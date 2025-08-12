@@ -7,10 +7,8 @@ components:
   - ../../components/common
 resources:
   - ./ganymede/ks.yaml
-  # - ./hoarder/ks.yaml
   - ./immich/ks.yaml
   - ./lidarr/ks.yaml
-  # - ./linkwarden/ks.yaml
   - ./pinchflat/ks.yaml
   - ./plex/ks.yaml
   - ./prowlarr/ks.yaml

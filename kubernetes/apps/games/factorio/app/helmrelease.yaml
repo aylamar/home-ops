@@ -34,10 +34,11 @@ spec:
           app:
             env:
               TZ: America/Chicago
-              SAVE_NAME: gigaworld9.zip
+              SAVE_NAME: tmp-world.zip
               LOAD_LATEST_SAVE: false
               BIND: "0.0.0.0"
               UPDATE_MODS_ON_START: true
+              GENERATE_NEW_SAVE: true
             image:
               repository: factoriotools/factorio
               tag: stable

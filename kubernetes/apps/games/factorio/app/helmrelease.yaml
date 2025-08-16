@@ -44,12 +44,6 @@ spec:
             resources:
               requests:
                 memory: 8000m
-          filebrowser:
-            env:
-              TZ: "${TIMEZONE}"
-            image:
-              repository: filebrowser/filebrowser
-              tag: v2.42.3-s6
     service:
       app:
         type: LoadBalancer
@@ -82,16 +76,9 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-          - host: &host-filebrowser factorio-files.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: filebrowser
         tls:
           - hosts:
               - *host
-              - *host-filebrowser
     persistence:
       data:
         enabled: true
@@ -100,13 +87,3 @@ spec:
           factorio:
             app:
               - path: /factorio
-            filebrowser:
-              - path: /db
-                subPath: filebrowser
-                # securityContext:
-                #   runAsUser: 845 # factorio user
-                #   runAsGroup: 845
-              - path: /srv/factorio
-                # securityContext:
-                #   runAsUser: 845 # factorio user
-                #   runAsGroup: 845

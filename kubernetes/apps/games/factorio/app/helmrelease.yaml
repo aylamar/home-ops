@@ -34,7 +34,7 @@ spec:
           app:
             env:
               TZ: America/Chicago
-              SAVE_NAME: warp-forever-10
+              SAVE_NAME: warp-forever-11
               LOAD_LATEST_SAVE: false
               BIND: "0.0.0.0"
               UPDATE_MODS_ON_START: true

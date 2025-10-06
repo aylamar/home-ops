@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: felddy/foundryvtt
-              tag: 13.348.0
+              tag: 13.350.0
             envFrom:
               - secretRef:
                   name: foundry-secret

@@ -73,14 +73,11 @@ spec:
           osdsPerDevice: "1"
         nodes:
           - name: "rhea-01"
-            devices:
-              - name: "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_1TB_S5P2NU0W800972J"
+            devicePathFilter: "^/dev/disk/by-id/nvme-Samsung_SSD_9[89]0_PRO_1TB_.*"
           - name: "rhea-02"
-            devices:
-              - name: "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S73VNJ0XC04257N"
+            devicePathFilter: "^/dev/disk/by-id/nvme-Samsung_SSD_9[89]0_PRO_1TB_.*"
           - name: "rhea-03"
-            devices:
-              - name: "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_1TB_S73VNJ0XC04128K"
+            devicePathFilter: "^/dev/disk/by-id/nvme-Samsung_SSD_9[89]0_PRO_1TB_.*"
       # placement:
       #   mgr: &placement
       #     nodeAffinity:

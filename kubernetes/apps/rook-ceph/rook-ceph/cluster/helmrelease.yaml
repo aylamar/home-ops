@@ -71,6 +71,14 @@ spec:
         useAllDevices: false
         config:
           osdsPerDevice: "1"
+        onlyApplyOSDPlacement: false
+        resources:
+          osd:
+            requests:
+              cpu: 500m
+              memory: 2Gi
+            limits:
+              memory: 6Gi
         nodes:
           - name: "rhea-01"
             devicePathFilter: "^/dev/disk/by-id/nvme-Samsung_SSD_9[89]0_PRO_1TB_.*"

@@ -6,5 +6,5 @@ namespace: games
 components:
   - ../../components/common
 resources:
-  - ./factorio/ks.yaml
+  # - ./factorio/ks.yaml
   - ./foundryvtt/ks.yaml

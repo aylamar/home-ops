@@ -25,6 +25,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 421
+        runAsGroup: 421
+        fsGroup: 421
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       foundryvtt:
         containers:

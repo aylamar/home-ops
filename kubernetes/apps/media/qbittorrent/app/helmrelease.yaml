@@ -189,7 +189,7 @@ spec:
                 readOnly: true
       gluetun-auth:
         type: secret
-        name: qbittorrent-gluetun-external-secret
+        name: qbittorrent-gluetun-secret
         advancedMounts:
           qbittorrent:
             gluetun:

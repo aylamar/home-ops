@@ -14,7 +14,7 @@ description = "Install Python dependencies"
 run = "uv pip install -r requirements.txt"
 
 [tools]
-python = "3.14.1"
+python = "3.14.2"
 uv = "0.9.15"
 "aqua:budimanjojo/talhelper" = "3.0.41"
 "aqua:cli/cli" = "2.83.1"

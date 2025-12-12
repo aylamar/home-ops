@@ -42,7 +42,7 @@ spec:
           app:
             image:
               repository: ghcr.io/zibbp/ganymede
-              tag: 4.9.1@sha256:1e0ec9cea835a928c414d1878c79f5748a45b4a38b7200dd901b2c629e5cd175
+              tag: 4.9.3@sha256:922e1aef08923cd361612012133b91d5cee4a4ae80ad54bab4e586b75356adbf
             env:
               TZ: America/Chicago
               PUID: 568

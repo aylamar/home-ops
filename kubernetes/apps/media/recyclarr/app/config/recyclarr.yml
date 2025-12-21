@@ -24,9 +24,6 @@ sonarr:
     # Set to 'true' to automatically remove custom formats from Radarr when they are removed from the guide or your configuration. This will NEVER delete custom formats you manually created!
     delete_old_custom_formats: true
 
-    # Instruct recyclarr to replace custom formats (old behavior)
-    replace_existing_custom_formats: true
-
     # Quality definitions from the guide to sync to Sonarr. Choices: series, anime
     quality_definition:
       type: anime
@@ -57,6 +54,12 @@ sonarr:
           - name: Remux-1080p - Anime
             score: 2000
 
+      - trash_ids:
+          - b2550eb333d27b75833e25b8c2557b38 # 10bit
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: 10 # Adjust scoring as desired
+
 # Configuration specific to Radarr.
 radarr:
   movies:
@@ -70,9 +73,6 @@ radarr:
 
     # Set to 'true' to automatically remove custom formats from Radarr when they are removed from the guide or your configuration. This will NEVER delete custom formats you manually created!
     delete_old_custom_formats: true
-
-    # Instruct recyclarr to replace custom formats (old behavior)
-    replace_existing_custom_formats: true
 
     include:
       # Comment out any of the following includes to disable them
@@ -132,3 +132,10 @@ radarr:
           - 9f6cbff8cfe4ebbc1bde14c7b7bec0de # IMAX Enhanced
         assign_scores_to:
           - name: Remux + WEB 1080p
+
+      - trash_ids:
+          - 3fbafa924f361e66fbc6187af82dfa85 # 5.1 Surround
+        assign_scores_to:
+          - name: Remux + WEB 1080p
+          - name: Remux-1080p - Anime
+            score: 5

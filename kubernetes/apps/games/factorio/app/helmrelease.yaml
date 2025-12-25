@@ -40,8 +40,8 @@ spec:
               UPDATE_MODS_ON_START: true
               GENERATE_NEW_SAVE: true
             image:
-              repository: factoriotools/factorio
-              tag: stable@sha256:feeebedf6754969a43d7c08a48fc9508b2d91b34f5cbf1e120740b3fbdf3a75e
+              repository: ronsonm/factorio # should swap back to factoriotools/factorio once thet fix their key
+              tag: stable@sha256:da7ea62873b85c95dadf5c72e8701bd0d999e6d4ce239cfb832fdefd6ac8a361
             resources:
               requests:
                 memory: 8000m

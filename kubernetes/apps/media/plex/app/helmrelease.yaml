@@ -70,15 +70,15 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-    service:
-      app:
-        controller: plex
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: 192.168.10.112
-        ports:
-          http:
-            port: 32400
+    # service:
+    #   app:
+    #     controller: plex
+    #     type: LoadBalancer
+    #     annotations:
+    #       lbipam.cilium.io/ips: 192.168.10.112
+    #     ports:
+    #       http:
+    #         port: 32400
     hostNetwork: true
     ingress:
       app:

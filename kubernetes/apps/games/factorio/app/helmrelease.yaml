@@ -41,7 +41,7 @@ spec:
               GENERATE_NEW_SAVE: true
             image:
               repository: ronsonm/factorio # should swap back to factoriotools/factorio once thet fix their key
-              tag: stable@sha256:3862ca2d624ac60da67bb4fa51509f7cdeb27505783c4587fc46ef914b3a0dd9
+              tag: stable@sha256:7150436547297e379267267c252a2ba095f7bd988f885ffc7fc021fff6bbdcac
             resources:
               requests:
                 memory: 8000m

@@ -89,4 +89,5 @@ spec:
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
     serviceAccount:
-      homepage: {}
+      homepage:
+        automountServiceAccountToken: true

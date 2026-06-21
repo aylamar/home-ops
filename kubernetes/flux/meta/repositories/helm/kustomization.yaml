@@ -6,6 +6,7 @@ resources:
   - ./backube.yaml
   - ./bitnami-charts.yaml
   - ./bjw-s.yaml
+  - ./ceph-csi-operator.yaml
   - ./cilium.yaml
   - ./cloudnative-pg.yaml
   - ./controlplaneio.yaml

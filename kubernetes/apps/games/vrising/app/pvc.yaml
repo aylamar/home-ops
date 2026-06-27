@@ -1,0 +1,12 @@
+---
+# Server binaries are re-downloaded on start, so this claim is not backed up by volsync.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vrising-server-files
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 16Gi
+  storageClassName: ceph-block

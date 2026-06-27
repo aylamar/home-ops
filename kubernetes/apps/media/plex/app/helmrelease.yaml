@@ -80,10 +80,8 @@ spec:
           http:
             port: 32400
     hostNetwork: true
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
@@ -94,16 +92,15 @@ spec:
           gethomepage.dev/widget.url: "http://plex.media.svc.cluster.local:32400"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLEX_TOKEN}}` }}"
           gethomepage.dev/widget.fields: '["streams", "movies", "tv"]'
-        hosts:
-          - host: &host plex.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["plex.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       config:
         existingClaim: *app

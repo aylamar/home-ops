@@ -55,23 +55,17 @@ spec:
         ports:
           http:
             port: &port 80
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
-        annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
-        hosts:
-          - host: &host pgadmin.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["pgadmin.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       config:
         enabled: true

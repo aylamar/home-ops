@@ -22,8 +22,6 @@ spec:
   values:
     fullnameOverride: *app
     domainFilters: ["${SECRET_DOMAIN}"]
-    extraArgs:
-      - --ignore-ingress-tls-spec
     podAnnotations:
       secret.reloader.stakater.com/reload: external-dns-unifi-secret
     policy: sync
@@ -65,7 +63,7 @@ spec:
     serviceMonitor:
       enabled: true
     sources:
-      - ingress
+      - gateway-httproute
       - service
     triggerLoopOnEvent: true
     txtOwnerId: main

@@ -66,10 +66,8 @@ spec:
         ports:
           http:
             port: &port 30000
-    ingress:
+    route:
       app:
-        enabled: true
-        className: external
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Games
@@ -77,16 +75,15 @@ spec:
           gethomepage.dev/icon: foundry-vtt.png
           gethomepage.dev/description: Virtual table top
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
-        hosts:
-          - host: &host foundry.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["foundry.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       data:
         enabled: true

@@ -61,9 +61,8 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        enabled: true
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
@@ -73,19 +72,15 @@ spec:
           gethomepage.dev/widget.type: sabnzbd
           gethomepage.dev/widget.url: "http://sabnzbd.media.svc.cluster.local:8080"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SABNZBD_TOKEN}}` }}"
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
-        hosts:
-          - host: &host sabnzbd.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-        className: internal
+        hostnames: ["sabnzbd.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       config:
         existingClaim: *app

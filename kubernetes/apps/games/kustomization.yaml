@@ -8,4 +8,3 @@ components:
 resources:
   # - ./factorio/ks.yaml
   - ./foundryvtt/ks.yaml
-  - ./vrising/ks.yaml

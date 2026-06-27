@@ -6,9 +6,3 @@ resources:
   - ./externalsecret.yaml
   - ./pvc.yaml
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: vrising-game-settings
-    files:
-      - ServerGameSettings.json
-generatorOptions:
-  disableNameSuffixHash: true

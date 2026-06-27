@@ -92,12 +92,3 @@ spec:
           vrising:
             app:
               - path: /mnt/vrising/server
-      game-settings:
-        type: configMap
-        name: vrising-game-settings
-        advancedMounts:
-          vrising:
-            app:
-              - path: /mnt/vrising/persistentdata/Settings/ServerGameSettings.json
-                subPath: ServerGameSettings.json
-                readOnly: true

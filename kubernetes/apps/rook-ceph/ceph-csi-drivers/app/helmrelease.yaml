@@ -57,6 +57,7 @@ spec:
         fsGroupPolicy: File
         deployCsiAddons: false
         cephFsClientType: kernel
+        snapshotPolicy: volumeSnapshot
         nodePlugin:
           kubeletDirPath: /var/lib/kubelet
           priorityClassName: system-node-critical

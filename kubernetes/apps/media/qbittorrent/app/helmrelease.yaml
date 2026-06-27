@@ -138,10 +138,8 @@ spec:
           http:
             port: *port
 
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
@@ -152,16 +150,15 @@ spec:
           gethomepage.dev/widget.url: "http://qbittorrent.media.svc.cluster.local:8080"
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}` }}"
           gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}` }}"
-        hosts:
-          - host: &host qbittorrent.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["qbittorrent.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
 
     persistence:
       config:

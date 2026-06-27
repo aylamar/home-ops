@@ -61,10 +61,8 @@ spec:
         ports:
           http:
             port: &port 7878
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
@@ -74,18 +72,15 @@ spec:
           gethomepage.dev/widget.type: radarr
           gethomepage.dev/widget.url: "http://radarr.media.svc.cluster.local:7878"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}"
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
-        hosts:
-          - host: &host radarr.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["radarr.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       config:
         enabled: true

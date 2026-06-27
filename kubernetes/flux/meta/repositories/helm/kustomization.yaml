@@ -15,7 +15,6 @@ resources:
   - ./external-secrets.yaml
   - ./grafana.yaml
   - ./immich-charts.yaml
-  - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./metrics-server.yaml

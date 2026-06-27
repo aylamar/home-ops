@@ -36,10 +36,7 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts: ["alertmanager.${SECRET_DOMAIN}"]
-        pathType: Prefix
+        enabled: false
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
@@ -71,16 +68,7 @@ spec:
       enabled: false
     prometheus:
       ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts: ["prometheus.${SECRET_DOMAIN}"]
-        pathType: Prefix
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Observability
-          gethomepage.dev/name: Prometheus
-          gethomepage.dev/icon: prometheus.svg
-          gethomepage.dev/description: Metric storage
+        enabled: false
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false

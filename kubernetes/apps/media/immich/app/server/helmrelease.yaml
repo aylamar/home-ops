@@ -75,10 +75,8 @@ spec:
         ports:
           http:
             port: &port 2283
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
@@ -89,19 +87,15 @@ spec:
           gethomepage.dev/widget.url: "http://immich-server.media.svc.cluster.local:3001"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_IMMICH_TOKEN}}` }}"
           gethomepage.dev/widget.fields: '["photos", "videos", "storage"]'
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
-        hosts:
-          - host: &host immich.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["immich.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       config:
         enabled: true

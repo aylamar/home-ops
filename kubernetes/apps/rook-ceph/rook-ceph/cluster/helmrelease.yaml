@@ -29,12 +29,6 @@ spec:
       createPrometheusRules: true
     toolbox:
       enabled: true
-    ingress:
-      dashboard:
-        ingressClassName: internal
-        host:
-          name: rook.${SECRET_DOMAIN}
-          path: /
     cephClusterSpec:
       cephConfig:
         global:

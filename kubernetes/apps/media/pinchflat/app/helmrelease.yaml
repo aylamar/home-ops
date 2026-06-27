@@ -58,28 +58,23 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads
           gethomepage.dev/name: pinchflat
           gethomepage.dev/icon: youtube.svg
           gethomepage.dev/description: YouTube archiver
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            192.168.0.0/16,172.16.0.0/12,10.0.0.0/8
-        hosts:
-          - host: &host pinchflat.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["pinchflat.${SECRET_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: http
     persistence:
       config:
         enabled: true

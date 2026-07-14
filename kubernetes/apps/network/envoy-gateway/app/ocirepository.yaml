@@ -12,4 +12,4 @@ spec:
   url: oci://mirror.gcr.io/envoyproxy/gateway-helm
   ref:
     # renovate: datasource=docker depName=mirror.gcr.io/envoyproxy/gateway-helm
-    tag: 1.8.1
+    tag: v1.8.2

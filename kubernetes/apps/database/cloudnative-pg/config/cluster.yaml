@@ -5,7 +5,9 @@ metadata:
   name: postgres
 spec:
   instances: 3
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.2-v0.2.1
+  # Migration image with both pgvecto.rs and VectorChord for Immich 3.0 upgrade
+  # After migration is complete, switch to: ghcr.io/tensorchord/cloudnative-vectorchord:16-0.3.0
+  imageName: ghcr.io/corentingiraud/cnpg-pgvector-vectorchord:16-migration
   # imageName: ghcr.io/cloudnative-pg/postgresql:16.2
   primaryUpdateStrategy: unsupervised
   superuserSecret:
@@ -16,6 +18,7 @@ spec:
     storageClass: ceph-block
   postgresql:
     shared_preload_libraries:
+      - "vchord.so"
       - "vectors.so"
     parameters:
       max_connections: "200"

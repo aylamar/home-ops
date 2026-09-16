@@ -69,6 +69,7 @@ spec:
     route:
       app:
         annotations:
+          external-dns.alpha.kubernetes.io/exclude: "true"
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Games
           gethomepage.dev/name: Foundry

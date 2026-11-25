@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.22.0
+      version: 1.24.0
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -21,6 +21,9 @@ spec:
 
   values:
     fullnameOverride: *app
+    # Separate prefix so this instance ignores the external-dns.kubernetes.io/target annotations meant for
+    # Cloudflare and publishes A records to the gateway IPs, keeping LAN traffic off the Cloudflare tunnel
+    annotationPrefix: internal-dns.kubernetes.io/
     domainFilters: ["${SECRET_DOMAIN}"]
     podAnnotations:
       secret.reloader.stakater.com/reload: external-dns-unifi-secret

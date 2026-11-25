@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.21.1
+      version: 1.24.0
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -41,6 +41,8 @@ spec:
       - --events
       - --gateway-name=external
     policy: sync
+    # Public (Cloudflare) records. Internal records use internal-dns.kubernetes.io/ (see external-dns-unifi)
+    annotationPrefix: external-dns.kubernetes.io/
     sources: ["crd", "gateway-httproute"]
     txtPrefix: k8s.
     txtOwnerId: default

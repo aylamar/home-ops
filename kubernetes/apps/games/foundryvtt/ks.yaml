@@ -34,4 +34,4 @@ spec:
       substitute:
         APP: *app
         VOLSYNC_CAPACITY: 24Gi
-        VOLSYNC_CACHE_CAPACITY: 12Gi
+        VOLSYNC_CACHE_CAPACITY: 24Gi
